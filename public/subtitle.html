@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: transparent;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+    body {
+      -webkit-app-region: drag;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 24px;
+      position: relative;
+    }
+    #close-btn {
+      -webkit-app-region: no-drag;
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      color: rgba(255,255,255,0.3);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      opacity: 0;
+    }
+    body:hover #close-btn { opacity: 1; }
+    #close-btn:hover {
+      background: rgba(255,60,60,0.8);
+      color: #fff;
+    }
+    #origin {
+      text-align: center;
+      font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.4;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #origin:empty { opacity: 0; }
+    #subtitle {
+      text-align: center;
+      font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #subtitle:empty { opacity: 0; }
+  </style>
+</head>
+<body>
+  <button id="close-btn" title="Close Subtitles" onclick="window.close()">✕</button>
+  <div id="origin"></div>
+  <div id="subtitle"></div>
+</body>
+</html>

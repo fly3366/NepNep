@@ -1,0 +1,400 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base reset ── */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: #fff;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  overflow: visible;
+  text-align: left;
+}
+
+/* ── Layout container ── */
+.app-shell {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* ── Icon sizing ── */
+.icon-sm { width: 18px; height: 18px; }
+.icon-xs { width: 15px; height: 15px; }
+
+/* ── API Key input ── */
+.apikey-input {
+  -webkit-app-region: no-drag;
+  flex: 1;
+  min-width: 0;
+}
+.apikey-input .n-input__border,
+.apikey-input .n-input__state-border {
+  border-color: rgba(255,255,255,0.2) !important;
+}
+.apikey-input .n-input-wrapper {
+  padding: 0 6px;
+}
+.apikey-input .n-input__input-el {
+  font-size: 11px;
+  color: #fff;
+  caret-color: #fff;
+  height: 24px;
+}
+.apikey-input .n-input__placeholder {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+}
+.apikey-input .n-input__eye {
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+}
+.apikey-input .n-input {
+  --n-color: rgba(0,0,0,0.2) !important;
+  --n-color-focus: rgba(0,0,0,0.25) !important;
+  --n-border-radius: 12px !important;
+  --n-height: 26px !important;
+  --n-text-color: #fff !important;
+  --n-caret-color: #fff !important;
+  --n-color-disabled: rgba(0,0,0,0.15) !important;
+  --n-text-color-disabled: rgba(255,255,255,0.4) !important;
+}
+
+/* ── Connect button with LED ── */
+.conn-btn {
+  -webkit-app-region: no-drag;
+  position: relative;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+.conn-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.25);
+}
+.conn-btn:disabled {
+  cursor: default;
+}
+
+.conn-led {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.conn-btn--on .conn-led {
+  background: #7cff6b;
+  box-shadow: 0 0 6px #7cff6b, inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+/* ── Toolbar wrapper (two rows) ── */
+.toolbar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* ── Toolbar (button row) ── */
+.toolbar {
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  height: 48px;
+  pointer-events: auto;
+}
+
+.toolbar .toolbar-btn {
+  -webkit-app-region: no-drag;
+  color: #fff;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 10px;
+  height: 28px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.toolbar .toolbar-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Play/pause button */
+.toolbar .play-btn {
+  -webkit-app-region: no-drag;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toolbar .play-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.08);
+}
+
+.toolbar .play-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Tape-deck toggle buttons (skeuomorphic) ── */
+.tape-btn {
+  -webkit-app-region: no-drag;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%);
+  box-shadow:
+    0 2px 3px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.tape-btn__face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(255,255,255,0.7);
+  transition: all 0.1s ease;
+}
+
+.tape-btn:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.14) 100%);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.tape-btn:active {
+  transform: translateY(1px);
+}
+
+/* Pressed / active state — sunken into the panel */
+.tape-btn--pressed {
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(0,0,0,0.45),
+    inset 0 0 1px rgba(0,0,0,0.2);
+  transform: translateY(1px);
+}
+
+.tape-btn--pressed .tape-btn__face {
+  color: #fff;
+  transform: scale(0.94);
+}
+
+.tape-btn--pressed::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  background: #7cff6b;
+  box-shadow: 0 0 4px #7cff6b;
+}
+
+.tape-btn--pressed:hover {
+  background: linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.02) 100%);
+  box-shadow:
+    inset 0 2px 3px rgba(0,0,0,0.4),
+    inset 0 0 1px rgba(0,0,0,0.15);
+}
+
+/* ── Guidance hint ── */
+.toolbar-hint {
+  -webkit-app-region: no-drag;
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+  animation: hint-pulse 2s ease-in-out infinite;
+  padding: 0 4px;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ── Error toast ── */
+.toolbar-error {
+  -webkit-app-region: no-drag;
+  font-size: 11px;
+  color: #ff6b6b;
+  background: rgba(255, 60, 60, 0.15);
+  border: 1px solid rgba(255, 60, 60, 0.3);
+  border-radius: 10px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  animation: error-flash 1.5s ease-in-out infinite;
+}
+
+@keyframes error-flash {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Close button */
+.toolbar .close-btn {
+  -webkit-app-region: no-drag;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toolbar .close-btn:hover {
+  background: #e81123;
+  color: #fff;
+}
+
+/* ── Key input row ── */
+.toolbar-key-row {
+  -webkit-app-region: no-drag;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px 8px;
+  height: 34px;
+  pointer-events: auto;
+}
+
+/* ── Audio visualizer canvas ── */
+.visualizer {
+  -webkit-app-region: no-drag;
+  height: 28px;
+  width: 80px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+/* Spacer utility */
+.toolbar-spacer {
+  flex: 1;
+}
+
+/* ── Settings popover panel ── */
+.settings-panel {
+  width: 360px;
+  max-width: 90vw;
+  padding: 14px;
+  background: #2a2a3a;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #fff;
+  font-size: 12px;
+}
+.settings-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.settings-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+}
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+.settings-hint {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
