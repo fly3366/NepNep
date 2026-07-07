@@ -43,7 +43,8 @@ export function registerIpcHandlers() {
 
   ipcMain.on('switchTop', () => {
     isOnTop = !isOnTop
-    allWindows().forEach((w) => w.setAlwaysOnTop(isOnTop, 'screen-saver'))
+    const level = process.platform === 'darwin' ? 'screen-saver' : 'floating'
+    allWindows().forEach((w) => w.setAlwaysOnTop(isOnTop, level))
   })
 
   ipcMain.on('toggleDrm', () => {
@@ -53,6 +54,10 @@ export function registerIpcHandlers() {
       w.setSkipTaskbar(isDrmOn)
       if (process.platform === 'darwin') {
         w.setVisibleOnAllWorkspaces(isDrmOn, { visibleOnFullScreen: true })
+      } else {
+        // Windows-specific: prevent minimizing and use higher always-on-top during DRM
+        w.setMinimizable(!isDrmOn)
+        w.setAlwaysOnTop(isDrmOn ? true : isOnTop, isDrmOn ? 'modal-panel' : 'floating')
       }
     })
     if (process.platform === 'darwin' && app.dock) {
@@ -76,11 +81,16 @@ export function registerIpcHandlers() {
   })
 
   function applyWindowState(win: BrowserWindow) {
-    win.setAlwaysOnTop(isOnTop, 'screen-saver')
+    const level = process.platform === 'darwin' ? 'screen-saver' : 'floating'
+    win.setAlwaysOnTop(isOnTop, level)
     win.setContentProtection(isDrmOn)
     win.setSkipTaskbar(isDrmOn)
     if (process.platform === 'darwin') {
       win.setVisibleOnAllWorkspaces(isDrmOn, { visibleOnFullScreen: true })
+    } else if (isDrmOn) {
+      // Windows-specific DRM: prevent minimizing and use higher always-on-top
+      win.setMinimizable(false)
+      win.setAlwaysOnTop(true, 'modal-panel')
     }
   }
 

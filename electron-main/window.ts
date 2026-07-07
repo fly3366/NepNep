@@ -92,7 +92,7 @@ export function createSubtitleWindow() {
     transparent: true,
     alwaysOnTop: true,
     resizable: true,
-    skipTaskbar: !isMac,
+    skipTaskbar: false,
     focusable: true,
     hasShadow: false,
     webPreferences: {
@@ -146,7 +146,7 @@ export function createHistoryWindow() {
     transparent: false,
     backgroundColor: '#1a1a2e',
     resizable: true,
-    skipTaskbar: !isMac,
+    skipTaskbar: false,
     hasShadow: true,
     alwaysOnTop: true,
     webPreferences: {
