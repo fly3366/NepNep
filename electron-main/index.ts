@@ -42,7 +42,7 @@ async function init() {
     // Register global shortcut for Space+X to toggle play/pause
     const ret = globalShortcut.register('Space+X', () => {
       const win = getMainWindow()
-      if (win) {
+      if (win && !win.isDestroyed()) {
         win.webContents.send('nepnep:space', -1)
         log('Space+X pressed')
       }

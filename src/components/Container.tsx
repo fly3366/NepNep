@@ -14,6 +14,10 @@ export const Container = defineComponent({
     const pinned = ref(false)
     const subtitleOn = ref(false)
     const historyOn = ref(false)
+    const lastDrmToggle = ref(0)
+    const lastPinToggle = ref(0)
+    const lastSubtitleToggle = ref(0)
+    const lastHistoryToggle = ref(0)
 
     const audioCtx = new AudioContext({
       // @ts-expect-error — silent sink so we don't play back captured audio
@@ -87,11 +91,35 @@ export const Container = defineComponent({
           onSelectSource={handleSelectSource}
           onSelectOutput={handleSelectOutput}
           onTogglePlay={handleTogglePlay}
-          onToggleDrm={() => { drmOn.value = !drmOn.value; window.customMedia.toggleDrm() }}
-          onSwitchTop={() => { pinned.value = !pinned.value; window.customMedia.switchTop() }}
+          onToggleDrm={() => {
+              const now = Date.now()
+              if (now - lastDrmToggle.value < 1000) return
+              lastDrmToggle.value = now
+              drmOn.value = !drmOn.value
+              window.customMedia.toggleDrm()
+            }}
+          onSwitchTop={() => {
+              const now = Date.now()
+              if (now - lastPinToggle.value < 100) return
+              lastPinToggle.value = now
+              pinned.value = !pinned.value
+              window.customMedia.switchTop()
+            }}
           onCloseWindow={() => window.customMedia.closeWindow()}
-          onToggleSubtitle={() => { subtitleOn.value = !subtitleOn.value; window.customMedia.toggleSubtitle() }}
-          onToggleHistory={() => { historyOn.value = !historyOn.value; window.customMedia.toggleHistory() }}
+          onToggleSubtitle={() => {
+              const now = Date.now()
+              if (now - lastSubtitleToggle.value < 100) return
+              lastSubtitleToggle.value = now
+              subtitleOn.value = !subtitleOn.value
+              window.customMedia.toggleSubtitle()
+            }}
+          onToggleHistory={() => {
+              const now = Date.now()
+              if (now - lastHistoryToggle.value < 100) return
+              lastHistoryToggle.value = now
+              historyOn.value = !historyOn.value
+              window.customMedia.toggleHistory()
+            }}
         />
         <audio ref={audioRef} muted={muted.value} crossorigin="use-credentials" hidden />
       </div>
