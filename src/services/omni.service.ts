@@ -2,6 +2,7 @@
  * Qwen-Omni-Realtime client — renderer side.
  * Communicates with main process OmniRelay via IPC.
  */
+import type { OmniEventType } from '../types/events'
 
 export interface OmniCallbacks {
   onConnected: () => void
@@ -23,7 +24,7 @@ export class OmniClient {
 
   async connect(apiKey: string): Promise<void> {
     // Register IPC listener for events from main process
-    this.cleanupListener = window.omni.onEvent((event: Record<string, any>) => {
+    this.cleanupListener = window.omni.onEvent((event: OmniEventType) => {
       this.handleEvent(event)
     })
 
@@ -42,8 +43,8 @@ export class OmniClient {
     window.omni.sendAudio(b64)
   }
 
-  private handleEvent(event: Record<string, any>) {
-    const type = event.type as string
+  private handleEvent(event: OmniEventType) {
+    const type = event.type
 
     switch (type) {
       case 'connection.open':

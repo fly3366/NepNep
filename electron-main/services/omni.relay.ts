@@ -7,6 +7,7 @@ import { ipcMain } from 'electron'
 import { getMainWindow, getSubtitleWindow, getHistoryWindow } from '../window'
 import { getState, saveState } from '../store'
 import { log, error as logError } from '../logger'
+import type { OmniEventType, InputTranscriptEvent, TranscriptDeltaEvent, TranscriptDoneEvent, ErrorEvent } from '../../src/types/events'
 
 export const DEFAULT_GATEWAY = 'wss://dashscope.aliyuncs.com/api-ws/v1/realtime'
 export const DEFAULT_MODEL = 'qwen3.5-omni-flash-realtime'
@@ -17,7 +18,6 @@ let currentTranslation = ''
 let currentOrigin = ''
 
 // Reconnect state
-let lastApiKey = ''
 let userDisconnect = false
 let reconnectAttempt = 0
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null
@@ -25,7 +25,7 @@ let pingTimer: ReturnType<typeof setInterval> | null = null
 const MAX_RECONNECT = 5
 const BASE_DELAY = 1000
 
-function emitToRenderer(event: Record<string, any>) {
+function emitToRenderer(event: OmniEventType) {
   const win = getMainWindow()
   if (win && !win.isDestroyed()) {
     win.webContents.send('omni-event', event)
@@ -64,38 +64,41 @@ function pushHistoryEntry(origin: string, translation: string) {
   histWin.webContents.send('push-entry', { origin, translation })
 }
 
-function handleOmniEvent(event: Record<string, any>) {
-  const type = event.type as string
+function handleOmniEvent(event: OmniEventType) {
+  const type = event.type
 
   switch (type) {
-    case 'conversation.item.input_audio_transcription.completed':
-      currentOrigin = event.transcript || ''
+    case 'conversation.item.input_audio_transcription.completed': {
+      const inputEvent = event as InputTranscriptEvent
+      currentOrigin = inputEvent.transcript || ''
       updateSubtitle('Translating...', currentOrigin)
       break
+    }
 
     case 'response.text.delta':
-    case 'response.audio_transcript.delta':
-      currentTranslation += (event.delta || '')
+    case 'response.audio_transcript.delta': {
+      const deltaEvent = event as TranscriptDeltaEvent
+      currentTranslation += (deltaEvent.delta || '')
       updateSubtitle(currentTranslation, currentOrigin)
       break
+    }
 
     case 'response.text.done':
+    case 'response.audio_transcript.done': {
+      const doneEvent = event as TranscriptDoneEvent
       currentTranslation = ''
-      updateSubtitle(event.text || '', currentOrigin)
-      pushHistoryEntry(currentOrigin, event.text || '')
+      const text = doneEvent.text || doneEvent.transcript || ''
+      updateSubtitle(text, currentOrigin)
+      pushHistoryEntry(currentOrigin, text)
       currentOrigin = ''
       break
+    }
 
-    case 'response.audio_transcript.done':
-      currentTranslation = ''
-      updateSubtitle(event.transcript || '', currentOrigin)
-      pushHistoryEntry(currentOrigin, event.transcript || '')
-      currentOrigin = ''
+    case 'error': {
+      const errEvent = event as ErrorEvent
+      logError('[OmniRelay] server error:', errEvent.error)
       break
-
-    case 'error':
-      logError('[OmniRelay] server error:', event.error)
-      break
+    }
 
     default:
       break
@@ -202,7 +205,6 @@ export function registerOmniHandlers() {
     }
 
     // Persist apiKey for next launch
-    lastApiKey = apiKey
     saveState({ apiKey })
 
     await doConnect(apiKey)

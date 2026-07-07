@@ -23,7 +23,7 @@ export const Container = defineComponent({
     })
 
     const { inputs, outputs, startPolling } = useMediaDevices()
-    const { playing, connected, sourceReady, error, initSession, selectSource, stop, togglePlaying } = useTranscription()
+    const { playing, connected, sourceReady, error, initSession, selectSource, togglePlaying } = useTranscription()
 
     onBeforeMount(() => {
       startPolling()

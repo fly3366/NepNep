@@ -15,7 +15,6 @@ export function useTranscription() {
   let audioPipeline: AudioPipeline | null = null
   let animationTimer: number | null = null
   let currentStream: MediaStream | null = null
-  let currentAudioCtx: AudioContext | null = null
 
   function appendLog(text: string) {
     const ts = new Date().toISOString()
@@ -67,7 +66,7 @@ export function useTranscription() {
     try {
       await omniClient.connect(apiKey)
       isActive.value = true
-    } catch (e) {
+    } catch {
       connected.value = false
       error.value = 'Connection failed'
       setTimeout(() => { error.value = null }, 5000)
@@ -86,7 +85,6 @@ export function useTranscription() {
       audioPipeline = null
     }
 
-    currentAudioCtx = audioCtx
     currentStream = await captureAudioStream(sourceId)
 
     // Build pipeline — shouldCapture gates PCM sending
@@ -128,7 +126,6 @@ export function useTranscription() {
     }
 
     currentStream = null
-    currentAudioCtx = null
     isActive.value = false
     playing.value = false
     connected.value = false

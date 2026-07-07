@@ -1,3 +1,5 @@
+import type { OmniEventType } from './types/events'
+
 declare module '*.json';
 declare module '*.png';
 declare module '*.jpg';
@@ -22,7 +24,7 @@ export interface OmniAPI {
     connect: (apiKey: string) => Promise<void>
     sendAudio: (b64: string) => void
     disconnect: () => void
-    onEvent: (callback: (event: Record<string, any>) => void) => () => void
+    onEvent: (callback: (event: OmniEventType) => void) => () => void
 }
 
 export interface CustomMediaAPI {
@@ -39,7 +41,7 @@ export interface CustomMediaAPI {
 }
 
 export interface NepNepHook {
-    onSpacePress: (callback: (value: any) => void) => void
+    onSpacePress: (callback: () => void) => void
 }
 
 declare global {

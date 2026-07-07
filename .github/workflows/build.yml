@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,8 +34,11 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Run tests
+        run: npm run test
+
   build:
-    needs: lint
+    needs: lint-and-test
     strategy:
       matrix:
         include:

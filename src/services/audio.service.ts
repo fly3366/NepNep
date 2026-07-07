@@ -1,9 +1,6 @@
-const SAMPLE_RATE = 16000
+import { SAMPLE_RATE, type AudioPipeline } from '../types/audio'
 
-export interface AudioPipeline {
-  analyser: AnalyserNode
-  stop: () => Promise<void>
-}
+export type { AudioPipeline }
 
 export async function captureAudioStream(sourceId: string): Promise<MediaStream> {
   if (sourceId === 'desktop') {
@@ -84,7 +81,7 @@ export function createAudioPipeline(
   }
 }
 
-function convertF32ToS16(f32Buffer: ArrayBuffer): ArrayBuffer {
+export function convertF32ToS16(f32Buffer: ArrayBuffer): ArrayBuffer {
   const f32 = new Float32Array(f32Buffer)
   const s16Buffer = new ArrayBuffer(f32.length * 2)
   const s16 = new Int16Array(s16Buffer)

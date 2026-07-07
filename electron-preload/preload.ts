@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
+import type { OmniEventType } from '../src/types/events'
 
 ipcRenderer.on('crash-file-path', (_event, args) => {
   if (process.env.NODE_ENV === 'development') console.warn('crash-file-path:', args)
@@ -6,8 +7,8 @@ ipcRenderer.on('crash-file-path', (_event, args) => {
 
 // ── Bridge: nepNepHook ──
 contextBridge.exposeInMainWorld('nepNepHook', {
-  onSpacePress: (callback: (value: any) => void) =>
-    ipcRenderer.on('nepnep:space', (_event, value) => callback(value)),
+  onSpacePress: (callback: () => void) =>
+    ipcRenderer.on('nepnep:space', () => callback()),
 })
 
 // ── Bridge: version ──
@@ -27,8 +28,8 @@ contextBridge.exposeInMainWorld('omni', {
   connect: (apiKey: string) => ipcRenderer.invoke('omni.connect', apiKey),
   sendAudio: (b64: string) => ipcRenderer.send('omni.audio', b64),
   disconnect: () => ipcRenderer.send('omni.disconnect'),
-  onEvent: (callback: (event: any) => void) => {
-    const handler = (_e: any, event: any) => callback(event)
+  onEvent: (callback: (event: OmniEventType) => void) => {
+    const handler = (_e: Electron.IpcRendererEvent, event: OmniEventType) => callback(event)
     ipcRenderer.on('omni-event', handler)
     return () => ipcRenderer.removeListener('omni-event', handler)
   },
