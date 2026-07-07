@@ -51,6 +51,12 @@ jobs:
           - os: macos-latest
             arch: arm64
             platform: mac
+          - os: ubuntu-latest
+            arch: x64
+            platform: linux
+          - os: ubuntu-24.04-arm
+            arch: arm64
+            platform: linux
 
     runs-on: ${{ matrix.os }}
 
@@ -99,6 +105,16 @@ jobs:
           path: |
             release/${{ github.event.repository.name }}*/**/*.dmg
             release/${{ github.event.repository.name }}*/**/*.zip
+            release/${{ github.event.repository.name }}*/**/*.blockmap
+          retention-days: 7
+
+      - name: Upload artifacts (Linux)
+        if: matrix.platform == 'linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
+          path: |
+            release/${{ github.event.repository.name }}*/**/*.AppImage
             release/${{ github.event.repository.name }}*/**/*.blockmap
           retention-days: 7
 

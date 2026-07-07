@@ -3,6 +3,8 @@ import path from 'path'
 import { getState, saveState } from './store'
 
 const isMac = process.platform === 'darwin'
+const isLinux = process.platform === 'linux'
+const isWindows = process.platform === 'win32'
 
 let mainWindow: BrowserWindow | null = null
 let subtitleWindow: BrowserWindow | null = null
@@ -52,6 +54,7 @@ export function createWindow() {
   if (isMac) {
     Menu.setApplicationMenu(Menu.buildFromTemplate([]))
   } else {
+    // Windows & Linux: remove menu bar
     mainWindow.removeMenu()
   }
   mainWindow.setIgnoreMouseEvents(true, { forward: true })
@@ -102,7 +105,8 @@ export function createSubtitleWindow() {
     },
   })
 
-  if (!isMac) subtitleWindow.removeMenu()
+  // Windows & Linux: remove menu bar
+  if (isWindows || isLinux) subtitleWindow.removeMenu()
 
   if (process.env.NODE_ENV !== 'development') {
     subtitleWindow.loadFile(path.join(__dirname, './subtitle.html'))
@@ -156,7 +160,8 @@ export function createHistoryWindow() {
     },
   })
 
-  if (!isMac) historyWindow.removeMenu()
+  // Windows & Linux: remove menu bar
+  if (isWindows || isLinux) historyWindow.removeMenu()
 
   if (process.env.NODE_ENV !== 'development') {
     historyWindow.loadFile(path.join(__dirname, './history.html'))

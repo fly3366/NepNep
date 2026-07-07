@@ -43,19 +43,30 @@ export function registerIpcHandlers() {
 
   ipcMain.on('switchTop', () => {
     isOnTop = !isOnTop
+    // macOS: 'screen-saver' works best; Windows/Linux: 'floating' is more reliable
     const level = process.platform === 'darwin' ? 'screen-saver' : 'floating'
     allWindows().forEach((w) => w.setAlwaysOnTop(isOnTop, level))
   })
 
   ipcMain.on('toggleDrm', () => {
     isDrmOn = !isDrmOn
+    const isWayland = process.platform === 'linux' && process.env.XDG_SESSION_TYPE === 'wayland'
     allWindows().forEach((w) => {
       w.setContentProtection(isDrmOn)
       w.setSkipTaskbar(isDrmOn)
       if (process.platform === 'darwin') {
+        // macOS: use native workspace visibility and dock control
         w.setVisibleOnAllWorkspaces(isDrmOn, { visibleOnFullScreen: true })
+      } else if (process.platform === 'linux') {
+        // Linux: X11 has similar behavior to Windows, Wayland has native security
+        if (!isWayland) {
+          // X11: setContentProtection works, prevent minimizing like Windows
+          w.setMinimizable(!isDrmOn)
+          w.setAlwaysOnTop(isDrmOn ? true : isOnTop, isDrmOn ? 'modal-panel' : 'floating')
+        }
+        // Wayland: native security handles screen capture protection, minimal extra needed
       } else {
-        // Windows-specific: prevent minimizing and use higher always-on-top during DRM
+        // Windows: prevent minimizing and use higher always-on-top during DRM
         w.setMinimizable(!isDrmOn)
         w.setAlwaysOnTop(isDrmOn ? true : isOnTop, isDrmOn ? 'modal-panel' : 'floating')
       }
@@ -81,14 +92,23 @@ export function registerIpcHandlers() {
   })
 
   function applyWindowState(win: BrowserWindow) {
+    // macOS: 'screen-saver' works best; Windows/Linux: 'floating' is more reliable
     const level = process.platform === 'darwin' ? 'screen-saver' : 'floating'
     win.setAlwaysOnTop(isOnTop, level)
     win.setContentProtection(isDrmOn)
     win.setSkipTaskbar(isDrmOn)
     if (process.platform === 'darwin') {
+      // macOS: use native workspace visibility
       win.setVisibleOnAllWorkspaces(isDrmOn, { visibleOnFullScreen: true })
+    } else if (process.platform === 'linux') {
+      // Linux: X11 needs extra protection, Wayland has native security
+      const isWayland = process.env.XDG_SESSION_TYPE === 'wayland'
+      if (!isWayland && isDrmOn) {
+        win.setMinimizable(false)
+        win.setAlwaysOnTop(true, 'modal-panel')
+      }
     } else if (isDrmOn) {
-      // Windows-specific DRM: prevent minimizing and use higher always-on-top
+      // Windows: prevent minimizing and use higher always-on-top
       win.setMinimizable(false)
       win.setAlwaysOnTop(true, 'modal-panel')
     }
