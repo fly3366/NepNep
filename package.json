@@ -93,6 +93,7 @@
     },
     "releaseInfo": {
       "releaseNotes": "ChangeLog"
-    }
+    },
+    "publish": null
   }
 }
