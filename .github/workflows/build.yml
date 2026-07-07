@@ -45,21 +45,27 @@ jobs:
           - os: windows-latest
             arch: x64
             platform: win
+            eb-platform: win
           - os: windows-latest
             arch: arm64
             platform: win
+            eb-platform: win
           - os: macos-latest
             arch: x64
             platform: mac
+            eb-platform: mac
           - os: macos-latest
             arch: arm64
             platform: mac
+            eb-platform: mac
           - os: ubuntu-latest
             arch: x64
             platform: linux
+            eb-platform: linux
           - os: ubuntu-24.04-arm
             arch: arm64
             platform: linux
+            eb-platform: linux
 
     runs-on: ${{ matrix.os }}
 
@@ -88,7 +94,7 @@ jobs:
         run: npm ci
 
       - name: Build application
-        run: npm run build
+        run: npm run build -- --${{ matrix.eb-platform }} --${{ matrix.arch }}
 
       - name: Upload artifacts (Windows)
         if: matrix.platform == 'win'
@@ -144,5 +150,5 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/*
+          files: artifacts/**/*
           generate_release_notes: true
