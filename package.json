@@ -72,6 +72,7 @@
     },
     "win": {
       "artifactName": "${productName}_${version}.${ext}",
+      "icon": "public/images/logo.ico",
       "target": [
         {
           "target": "nsis",
@@ -86,10 +87,8 @@
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": true,
-      "installerIcon": "logo.png",
-      "uninstallerIcon": "logo.png",
-      "installerHeader": "logo.png",
-      "installerHeaderIcon": "logo.png"
+      "installerIcon": "public/images/logo.ico",
+      "uninstallerIcon": "public/images/logo.ico"
     },
     "releaseInfo": {
       "releaseNotes": "ChangeLog"
