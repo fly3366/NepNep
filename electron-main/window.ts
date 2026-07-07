@@ -41,11 +41,9 @@ export function createWindow() {
     height: saved?.height ?? 300,
     width: saved?.width ?? 420,
     ...(saved ? { x: saved.x, y: saved.y } : {}),
-    // macOS: use hidden titlebar to keep traffic-light buttons
-    // Windows: fully frameless
-    ...(isMac
-      ? { titleBarStyle: 'hiddenInset' as const, trafficLightPosition: { x: 10, y: 10 } }
-      : { frame: false, thickFrame: false }),
+    // macOS & Windows: fully frameless to hide traffic lights
+    frame: false,
+    thickFrame: false,
     backgroundColor: '#00000000',
     transparent: true,
   })
