@@ -96,8 +96,8 @@ jobs:
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
           path: |
-            release/${{ github.event.repository.name }}*/**/*.exe
-            release/${{ github.event.repository.name }}*/**/*.blockmap
+            release/**/nepnep*.exe
+            release/**/nepnep*.blockmap
           retention-days: 7
 
       - name: Upload artifacts (macOS)
@@ -106,9 +106,9 @@ jobs:
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
           path: |
-            release/${{ github.event.repository.name }}*/**/*.dmg
-            release/${{ github.event.repository.name }}*/**/*.zip
-            release/${{ github.event.repository.name }}*/**/*.blockmap
+            release/**/nepnep*.dmg
+            release/**/nepnep*.zip
+            release/**/nepnep*.blockmap
           retention-days: 7
 
       - name: Upload artifacts (Linux)
@@ -117,8 +117,8 @@ jobs:
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
           path: |
-            release/${{ github.event.repository.name }}*/**/*.AppImage
-            release/${{ github.event.repository.name }}*/**/*.blockmap
+            release/**/nepnep*.AppImage
+            release/**/nepnep*.blockmap
           retention-days: 7
 
   release:
