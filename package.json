@@ -75,13 +75,14 @@
       ]
     },
     "win": {
-      "artifactName": "${productName}_${version}.${ext}",
+      "artifactName": "${productName}_${version}_${arch}.${ext}",
       "icon": "public/images/logo.ico",
       "target": [
         {
           "target": "nsis",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         }
       ]
