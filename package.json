@@ -87,6 +87,15 @@
         }
       ]
     },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "installerIcon": "public/images/logo.ico",
+      "uninstallerIcon": "public/images/logo.ico",
+      "multiArchInstaller": false
+    },
     "linux": {
       "artifactName": "${productName}_${version}_linux_${arch}.${ext}",
       "icon": "logo.png",

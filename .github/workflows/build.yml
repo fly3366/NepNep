@@ -101,7 +101,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
-          path: release/**/nepnep*windows*.exe
+          path: release/**/nepnep_*_windows_${{ matrix.arch }}.exe
           retention-days: 7
 
       - name: Upload artifacts (macOS)
@@ -109,7 +109,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
-          path: release/**/nepnep*macos*.dmg
+          path: release/**/nepnep_*_macos_${{ matrix.arch }}.dmg
           retention-days: 7
 
       - name: Upload artifacts (Linux)
@@ -117,7 +117,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
-          path: release/**/nepnep*linux*.AppImage
+          path: release/**/nepnep_*_linux_*.AppImage
           retention-days: 7
 
   release:
