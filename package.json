@@ -62,7 +62,7 @@
       "./logo.png"
     ],
     "mac": {
-      "artifactName": "${productName}_${version}_${arch}.${ext}",
+      "artifactName": "${productName}_${version}_macos_${arch}.${ext}",
       "icon": "logo.png",
       "target": [
         {
@@ -75,7 +75,7 @@
       ]
     },
     "win": {
-      "artifactName": "${productName}_${version}_${arch}.${ext}",
+      "artifactName": "${productName}_${version}_windows_${arch}.${ext}",
       "icon": "public/images/logo.ico",
       "target": [
         {
@@ -88,7 +88,7 @@
       ]
     },
     "linux": {
-      "artifactName": "${productName}_${version}_${arch}.${ext}",
+      "artifactName": "${productName}_${version}_linux_${arch}.${ext}",
       "icon": "logo.png",
       "target": [
         {
