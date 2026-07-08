@@ -13,6 +13,9 @@
     <a href="https://github.com/fly3366/NepNep/releases">
       <img src="https://img.shields.io/github/v/release/fly3366/NepNep?style=for-the-badge&label=Release&color=purple" alt="Release">
     </a>
+    <a href="https://github.com/fly3366/NepNep/actions">
+      <img src="https://img.shields.io/github/actions/workflow-status/fly3366/NepNep/build.yml?branch=main&style=for-the-badge&label=CI" alt="CI">
+    </a>
     <a href="LICENSE">
       <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License">
     </a>
@@ -105,6 +108,10 @@ src/                    # 渲染进程 (Vue 3 + TSX)
 ## 🤝 贡献
 
 欢迎 PR！让我们一起让 NepNep 更好～
+
+- [贡献指南](CONTRIBUTING.md)
+- [安全政策](SECURITY.md)
+- [AI Agent 指南](AGENTS.md)
 
 ---
 
