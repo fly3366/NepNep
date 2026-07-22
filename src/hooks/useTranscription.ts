@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { OmniClient } from '../services/omni.service'
 import { captureAudioStream, createAudioPipeline, type AudioPipeline } from '../services/audio.service'
+import { useVisualization } from './useVisualization'
 import { log, error as logError } from '../logger'
 
 export function useTranscription() {
@@ -11,9 +12,10 @@ export function useTranscription() {
   const error = ref<string | null>(null)
   const sourceReady = ref(false)
 
+  const visualization = useVisualization()
+
   let omniClient: OmniClient | null = null
   let audioPipeline: AudioPipeline | null = null
-  let animationTimer: number | null = null
   let currentStream: MediaStream | null = null
 
   function appendLog(text: string) {
@@ -77,10 +79,7 @@ export function useTranscription() {
   async function selectSource(sourceId: string, audioCtx: AudioContext, canvas: HTMLCanvasElement | null): Promise<MediaStream> {
     // Stop previous pipeline if switching source
     if (audioPipeline) {
-      if (animationTimer !== null) {
-        cancelAnimationFrame(animationTimer)
-        animationTimer = null
-      }
+      visualization.stop()
       await audioPipeline.stop()
       audioPipeline = null
     }
@@ -96,7 +95,7 @@ export function useTranscription() {
     )
 
     if (canvas) {
-      startVisualization(audioPipeline.analyser, canvas)
+      visualization.start(audioPipeline.analyser, canvas)
     }
 
     sourceReady.value = true
@@ -110,10 +109,7 @@ export function useTranscription() {
   }
 
   async function stop() {
-    if (animationTimer !== null) {
-      cancelAnimationFrame(animationTimer)
-      animationTimer = null
-    }
+    visualization.stop()
 
     if (audioPipeline) {
       await audioPipeline.stop()
@@ -130,33 +126,6 @@ export function useTranscription() {
     playing.value = false
     connected.value = false
     sourceReady.value = false
-  }
-
-  function startVisualization(analyser: AnalyserNode, canvas: HTMLCanvasElement) {
-    const ctx = canvas.getContext('2d')!
-    const bufLen = analyser.frequencyBinCount
-    const dataArr = new Uint8Array(bufLen)
-    const { width, height } = canvas
-    const barWidth = (width / bufLen) * 1
-
-    function render() {
-      analyser.getByteFrequencyData(dataArr)
-      ctx.clearRect(0, 0, width, height)
-
-      let x = 0
-      for (let i = 0; i < bufLen; i++) {
-        const barHeight = dataArr[i]
-        const r = barHeight + 25 * (i / bufLen)
-        const g = 250 * (i / bufLen)
-        ctx.fillStyle = `rgb(${r},${g},50)`
-        ctx.fillRect(x, height - barHeight, barWidth, barHeight)
-        x += barWidth + 2
-      }
-
-      animationTimer = requestAnimationFrame(render)
-    }
-
-    animationTimer = requestAnimationFrame(render)
   }
 
   return { isActive, playing, connected, sourceReady, logContent, error, initSession, selectSource, stop, togglePlaying }
