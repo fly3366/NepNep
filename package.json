@@ -7,6 +7,29 @@
   "author": {
     "name": "NepNep Contributors"
   },
+  "homepage": "https://github.com/fly3366/NepNep#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fly3366/NepNep.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fly3366/NepNep/issues"
+  },
+  "keywords": [
+    "electron",
+    "vue",
+    "translation",
+    "speech-to-text",
+    "real-time",
+    "subtitle",
+    "qwen",
+    "qwen-omni",
+    "dashscope",
+    "desktop-app"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "main": "dist-electron/index.js",
   "scripts": {
     "dev": "vite",
@@ -108,14 +131,6 @@
           ]
         }
       ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": true,
-      "deleteAppDataOnUninstall": true,
-      "installerIcon": "public/images/logo.ico",
-      "uninstallerIcon": "public/images/logo.ico"
     },
     "releaseInfo": {
       "releaseNotes": "ChangeLog"

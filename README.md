@@ -55,7 +55,7 @@
 npm install
 
 # 开发模式
-npm run build
+npm run dev
 
 # 构建安装包
 npm run build
@@ -110,7 +110,9 @@ src/                    # 渲染进程 (Vue 3 + TSX)
 欢迎 PR！让我们一起让 NepNep 更好～
 
 - [贡献指南](CONTRIBUTING.md)
+- [行为准则](CODE_OF_CONDUCT.md)
 - [安全政策](SECURITY.md)
+- [更新日志](CHANGELOG.md)
 - [AI Agent 指南](AGENTS.md)
 
 ---
