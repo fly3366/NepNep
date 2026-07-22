@@ -10,7 +10,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.ts', 'electron-main/**/*.ts'],
-      exclude: ['src/**/*.test.ts', 'electron-main/**/*.test.ts', 'src/types/**'],
+      exclude: ['src/**/*.test.ts', 'electron-main/**/*.test.ts', 'src/types/**', 'src/**/*.d.ts', 'src/main.ts'],
     },
   },
 })
