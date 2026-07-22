@@ -38,7 +38,7 @@ jobs:
         run: npm run test:coverage
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/
@@ -105,7 +105,7 @@ jobs:
 
       - name: Upload artifacts (Windows)
         if: matrix.platform == 'win'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
           path: release/**/nepnep_*_windows_${{ matrix.arch }}.exe
@@ -113,7 +113,7 @@ jobs:
 
       - name: Upload artifacts (macOS)
         if: matrix.platform == 'mac'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
           path: release/**/nepnep_*_macos_${{ matrix.arch }}.dmg
@@ -121,7 +121,7 @@ jobs:
 
       - name: Upload artifacts (Linux)
         if: matrix.platform == 'linux'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nepnep-${{ matrix.platform }}-${{ matrix.arch }}
           path: release/**/nepnep_*_linux_*.AppImage
