@@ -101,7 +101,10 @@ Edit `electron-main/ipc.ts`:
 
 ## Testing
 
-Unit tests in `src/**/*.test.ts` using Vitest. Run with `npm run test`.
+Unit tests in `src/**/*.test.ts` and `electron-main/**/*.test.ts` using Vitest. Run with `npm run test`.
 
 Current test coverage:
-- `audio.service.test.ts` - PCM conversion tests
+- `src/services/audio.service.test.ts` - PCM conversion
+- `src/services/omni.service.test.ts` - WebSocket event dispatch (OmniClient)
+- `src/hooks/useMediaDevices.test.ts` - device polling composable
+- `electron-main/store.test.ts` - encrypted state persistence
