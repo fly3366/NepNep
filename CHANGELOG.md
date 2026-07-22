@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.nvmrc` pinning the Node.js version used by CI.
 
 ### Fixed
-- Removed a duplicate `nsis` block in `package.json` that silently overrode `multiArchInstaller: false`.
+- Removed a duplicate `nsis` block in `package.json` and an invalid `multiArchInstaller` option that broke `electron-builder` config validation.
+- Moved `esbuild` from runtime `dependencies` to `devDependencies` (build-time only).
+- Removed a dead `css.postcss` reference in `vite.config.ts` left over from the Tailwind removal.
 - Corrected the development command in the README (`npm run dev` instead of `npm run build`).
 
 ## [0.1.0] - 2026-07-07

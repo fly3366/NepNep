@@ -41,7 +41,6 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "esbuild": "^0.28.1",
     "naive-ui": "^2.38.2",
     "vfonts": "^0.0.3",
     "vue": "^3.5.39",
@@ -58,6 +57,7 @@
     "@vue/test-utils": "^2.4.11",
     "electron": "^43.0.0",
     "electron-builder": "^26.15.3",
+    "esbuild": "^0.28.1",
     "eslint": "^9.0.0",
     "happy-dom": "^20.11.0",
     "icon-gen": "^5.0.0",
@@ -118,8 +118,7 @@
       "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": true,
       "installerIcon": "public/images/logo.ico",
-      "uninstallerIcon": "public/images/logo.ico",
-      "multiArchInstaller": false
+      "uninstallerIcon": "public/images/logo.ico"
     },
     "linux": {
       "artifactName": "${productName}_${version}_linux_${arch}.${ext}",
