@@ -10,6 +10,10 @@
   </p>
 
   <p>
+    <strong>简体中文</strong> · <a href="README.en.md">English</a>
+  </p>
+
+  <p>
     <a href="https://github.com/fly3366/NepNep/releases">
       <img src="https://img.shields.io/github/v/release/fly3366/NepNep?style=for-the-badge&label=Release&color=purple" alt="Release">
     </a>
