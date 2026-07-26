@@ -18,13 +18,13 @@
       <img src="https://img.shields.io/github/v/release/fly3366/NepNep?style=for-the-badge&label=Release&color=purple" alt="Release">
     </a>
     <a href="https://github.com/fly3366/NepNep/actions">
-      <img src="https://img.shields.io/github/actions/workflow-status/fly3366/NepNep/build.yml?branch=main&style=for-the-badge&label=CI" alt="CI">
+      <img src="https://img.shields.io/github/actions/workflow/status/fly3366/NepNep/build.yml?branch=main&style=for-the-badge&label=CI" alt="CI">
     </a>
     <a href="LICENSE">
       <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License">
     </a>
     <a href="https://help.aliyun.com/zh/model-studio/developer-reference/qwen-omni-realtime">
-      <img src="https://img.shields.io/badge/API-Qwen--Omni-Realtime-orange?style=for-the-badge" alt="API">
+      <img src="https://img.shields.io/badge/API-Qwen--Omni--Realtime-orange?style=for-the-badge" alt="API">
     </a>
   </p>
 </div>
