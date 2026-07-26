@@ -4,9 +4,13 @@ import { registerIpcHandlers } from './ipc'
 import { loadState } from './store'
 import { log, warn } from './logger'
 
-function makeSingleInstance() {
-  if (process.mas) return
-  app.requestSingleInstanceLock()
+function makeSingleInstance(): boolean {
+  if (process.mas) return true
+  if (!app.requestSingleInstanceLock()) {
+    // Another instance already holds the lock — quit this one.
+    app.quit()
+    return false
+  }
   app.on('second-instance', () => {
     const win = BrowserWindow.getAllWindows()[0]
     if (win) {
@@ -14,6 +18,7 @@ function makeSingleInstance() {
       win.focus()
     }
   })
+  return true
 }
 
 async function checkMediaAccess() {
@@ -31,7 +36,7 @@ async function checkMediaAccess() {
 }
 
 async function init() {
-  makeSingleInstance()
+  if (!makeSingleInstance()) return
   await checkMediaAccess()
   registerIpcHandlers()
 

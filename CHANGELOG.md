@@ -7,12 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-07-26
+
+### Fixed
+- Enforce the single-instance lock: previously the result of
+  `app.requestSingleInstanceLock()` was ignored, so launching the app twice
+  ran two full instances (duplicate windows, competing global shortcuts).
+  The second instance now exits immediately.
+- Broken README badges: the CI badge used a wrong shields.io path
+  (`actions/workflow-status` → `actions/workflow/status`) and the API badge
+  had an unescaped dash, both rendering as "404: badge not found".
+
 ### Added
 - English README and repository metadata (`repository`, `bugs`, `homepage`, `keywords`, `engines`).
 - `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, Dependabot config, and issue-template chooser config.
 - `.nvmrc` pinning the Node.js version used by CI.
+- Repository description and topics on GitHub.
 
-### Fixed
+### Fixed (build & docs, previously unreleased)
 - Removed a duplicate `nsis` block in `package.json` and an invalid `multiArchInstaller` option that broke `electron-builder` config validation.
 - Moved `esbuild` from runtime `dependencies` to `devDependencies` (build-time only).
 - Removed a dead `css.postcss` reference in `vite.config.ts` left over from the Tailwind removal.
