@@ -6,9 +6,6 @@ on:
       - main
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 concurrency:
@@ -46,7 +43,9 @@ jobs:
 
   build:
     needs: lint-and-test
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: windows-latest
@@ -151,7 +150,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          # 只上传安装包, 避免把 coverage 等杂项 artifact 一并发布
           files: |
             artifacts/**/nepnep_*.dmg
             artifacts/**/nepnep_*.exe
